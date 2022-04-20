@@ -51,7 +51,7 @@
 
 // Once the optimized values have been calculated, we can also calculate the marginal covariance
 // of desired variables
-// 一旦这些优化后的值被计算出来，我们就可以计算这些待求值的边界协方差（marginal covariance）
+// 一旦这些优化后的值被计算出来，我们就可以计算这些待求值的边界协方差（marginal covariance）近似的后验概率
 #include <gtsam/nonlinear/Marginals.h>
 
 // The nonlinear solvers within GTSAM are iterative solvers, meaning they linearize the
@@ -102,6 +102,7 @@ int main(int argc, char** argv) {
   // Calculate and print marginal covariances for all variables
   cout.precision(2);
   Marginals marginals(graph, result);
+  // 需要注意的是，这里的协方差矩阵是由相对坐标给出的，而不是绝对值。
   cout << "x1 covariance:\n" << marginals.marginalCovariance(1) << endl;
   cout << "x2 covariance:\n" << marginals.marginalCovariance(2) << endl;
   cout << "x3 covariance:\n" << marginals.marginalCovariance(3) << endl;
