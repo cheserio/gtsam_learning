@@ -17,6 +17,7 @@
  * Syntax for the script is ./Pose2SLAMExample_lago input.g2o output.g2o
  * @date May 15, 2014
  * @author Luca Carlone
+ * 从g2o读取数据使用LAGO优化器解决2D问题，将结果以g2o格式输出
  */
 
 #include <gtsam/slam/lago.h>
@@ -45,6 +46,7 @@ int main(const int argc, const char *argv[]) {
   graph->print();
 
   std::cout << "Computing LAGO estimate" << std::endl;
+  // 使用的是LAGO优化器
   Values estimateLago = lago::initialize(*graph);
   std::cout << "done!" << std::endl;
 

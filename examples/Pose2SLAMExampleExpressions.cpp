@@ -14,9 +14,11 @@
  * @brief Expressions version of Pose2SLAMExample.cpp
  * @date Oct 2, 2014
  * @author Frank Dellaert
+ * 表达式版本的Pose2SLAMExample.cpp
  */
 
 // The two new headers that allow using our Automatic Differentiation Expression framework
+// 这两个新的头文件允许使用我们的自动微分表达式框架
 #include <gtsam/slam/expressions.h>
 #include <gtsam/nonlinear/ExpressionFactorGraph.h>
 
@@ -34,22 +36,27 @@ int main(int argc, char** argv) {
   ExpressionFactorGraph graph;
 
   // Create Expressions for unknowns
+  // 为未知数创建表达式 这里Pose_是表达式头文件中的
   Pose2_ x1(1), x2(2), x3(3), x4(4), x5(5);
 
   // 2a. Add a prior on the first pose, setting it to the origin
+  // 添加先验值 位置就放在X1的地方
   auto priorNoise = noiseModel::Diagonal::Sigmas(Vector3(0.3, 0.3, 0.1));
   graph.addExpressionFactor(x1, Pose2(0, 0, 0), priorNoise);
 
   // For simplicity, we use the same noise model for odometry and loop closures
+  // 回环因子和二元因子使用相同的噪声
   auto model = noiseModel::Diagonal::Sigmas(Vector3(0.2, 0.2, 0.1));
 
   // 2b. Add odometry factors
+  // 添加二元因子
   graph.addExpressionFactor(between(x1, x2), Pose2(2, 0, 0), model);
   graph.addExpressionFactor(between(x2, x3), Pose2(2, 0, M_PI_2), model);
   graph.addExpressionFactor(between(x3, x4), Pose2(2, 0, M_PI_2), model);
   graph.addExpressionFactor(between(x4, x5), Pose2(2, 0, M_PI_2), model);
 
   // 2c. Add the loop closure constraint
+  // 添加回环因子
   graph.addExpressionFactor(between(x5, x2), Pose2(2, 0, M_PI_2), model);
   graph.print("\nFactor Graph:\n");  // print
 

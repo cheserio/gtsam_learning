@@ -11,9 +11,10 @@
 
 /**
  * @file Pose2SLAMExample_graphviz.cpp
- * @brief Save factor graph as graphviz dot file
+ * @brief Save factor graph as graphviz dot file 
  * @date Sept 6, 2013
  * @author Frank Dellaert
+ * 将因子图保存成graphviz .dot文件
  */
 
 // For an explanation of headers below, please see Pose2SLAMExample.cpp
@@ -43,7 +44,7 @@ int main(int argc, char** argv) {
   graph.emplace_shared<BetweenFactor<Pose2> >(3, 4, Pose2(2, 0, M_PI_2), model);
   graph.emplace_shared<BetweenFactor<Pose2> >(4, 5, Pose2(2, 0, M_PI_2), model);
 
-  // 2c. Add the loop closure constraint
+  // 2c. Add the loop closure constraint 添加回环约束
   graph.emplace_shared<BetweenFactor<Pose2> >(5, 2, Pose2(2, 0, M_PI_2), model);
 
   // 3. Create the data structure to hold the initial estimate to the solution
@@ -60,9 +61,11 @@ int main(int argc, char** argv) {
 
   // save factor graph as graphviz dot file
   // Render to PDF using "fdp Pose2SLAMExample.dot -Tpdf > graph.pdf"
+  // 将图的结果输出成.dot文件
   graph.saveGraph("Pose2SLAMExample.dot", result);
 
   // Also print out to console
+  // 在命令行输出结果
   graph.dot(cout, result);
 
   return 0;
